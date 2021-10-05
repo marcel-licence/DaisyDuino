@@ -4,6 +4,7 @@
 #include "utility/dma.h"
 #include "utility/gpio.h"
 #include "utility/sys_mpu.h"
+#include "utility/codec_ak4556.h"
 
 #define PIN_AK4556_RESET 14
 #define PORT_AK4556_RESET DSY_GPIOB
@@ -74,6 +75,12 @@ DaisyHardware AudioClass::init(DaisyDuinoDevice device,
   // Then Initialize
   SaiHandle sai_handle[2];
   sai_handle[0].Init(sai_config[0]);
+
+  // Device Init
+  dsy_gpio_pin codec_reset_pin;
+  codec_reset_pin = {DSY_GPIOB, 11};
+  //codec_ak4556_init(codec_reset_pin);
+  Ak4556::Init(codec_reset_pin);
 
   // SAI2
   if (_device == DAISY_PATCH) {
